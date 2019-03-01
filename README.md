@@ -1,2 +1,3 @@
-# fcc-api-cert-projects
-Simple API projects for freecodecamp.org certification
+# Info
+
+Root repository for collection of final projects for certification on freecodecamp.org
