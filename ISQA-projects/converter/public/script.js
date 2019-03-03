@@ -21,7 +21,6 @@ function onDOMReady() {
 
 function infoClicked(event){
   let infoSec = document.getElementById("userstories");
-  console.log(infoSec.hasAttribute("class"));
   if (infoSec.hasAttribute("class"))
     infoSec.removeAttribute('class');
    else infoSec.setAttribute('class','hidden');
