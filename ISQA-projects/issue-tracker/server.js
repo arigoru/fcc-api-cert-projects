@@ -57,6 +57,13 @@ fccTestingRoutes(app);
 //Routing for API
 apiRoutes(app,()=>{
 
+app.use(function(req, res, next) {
+      res
+        .status(404)
+        .type("text")
+        .send("Not Found");
+    });
+
 app.listen(process.env.PORT || 3000, function() {
   console.log("Listening on port " + process.env.PORT);
   if (process.env.NODE_ENV === "test") {

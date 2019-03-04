@@ -47,13 +47,6 @@ module.exports = function(app,next) {
       .post(sanitizeInput, issuePost)
       .put(sanitizeInput, issuePut)
       .delete(sanitizeInput, issueDelete);
-      
-    app.use(function(req, res, next) {
-      res
-        .status(404)
-        .type("text")
-        .send("Not Found");
-    });
     next();
   });
 };
