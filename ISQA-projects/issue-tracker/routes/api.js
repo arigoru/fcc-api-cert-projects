@@ -13,6 +13,8 @@ var MongoClient = require("mongodb");
 var mongoose = require("mongoose");
 var ObjectId = require("mongodb").ObjectID;
 const sanitize = require("mongo-sanitize");
+var bleach = require('bleach');
+
 
 const CONNECTION_STRING = process.env.DATABASE;
 //MongoClient.connect(CONNECTION_STRING, function(err, db) {});
@@ -151,11 +153,11 @@ const VALIDFIELDS = [
 function createIssue(next, data, project) {
   let result;
   let issueData = {
-    issue_title: data.issue_title,
-    issue_text: data.issue_text,
-    created_by: data.created_by,
-    assigned_to: data.assigned_to,
-    status_text: data.status_text,
+    issue_title: bleach.sanitize(data.issue_title),
+    issue_text:  bleach.sanitize(data.issue_text),
+    created_by:  bleach.sanitize(data.created_by),
+    assigned_to: bleach.sanitize(data.assigned_to),
+    status_text: bleach.sanitize(data.status_text),
     project: project
   };
 
@@ -184,7 +186,7 @@ function updateIssue(next, formData, project) {
    // console.log(key,' : ',formData[key]);
     if (formData[key].length > 0 && VALIDFIELDS.indexOf(key) >= 0) {
       updated = true;
-      newObj[key] = formData[key];
+      newObj[key] = bleach.sanitize(formData[key]);
     }
   }
   if (newObj.open===undefined) newObj.open = true;

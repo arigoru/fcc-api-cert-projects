@@ -13,6 +13,8 @@ var MongoClient = require("mongodb").MongoClient;
 var mongoose = require("mongoose");
 var ObjectId = require("mongodb").ObjectId;
 const sanitize = require("mongo-sanitize");
+var bleach = require('bleach');
+
 
 const CONNECTION_STRING = process.env.DATABASE;
 //Example connection: MongoClient.connect(MONGODB_CONNECTION_STRING, function(err, db) {});
@@ -34,9 +36,10 @@ let bookModel = mongoose.model("books", bookSchema);
 
 function sanitizeInput(request, response, next) {
   response.header("Content-Type", "application/json");
-  request.query = sanitize(request.query);
+  request.query =  sanitize(request.query);
   request.params = sanitize(request.params);
   request.fields = sanitize(request.fields);
+  request.body = sanitize(request.body);
   next();
 }
 
@@ -85,7 +88,7 @@ function booksPost(request, response) {
     // console.log("fields: ", request.fields);
     if (request.body.title !== undefined && request.body.title.length > 0) {
       var bookData = {
-        title: request.body.title
+        title: bleach.sanitize(request.body.title)
       };
       let book = new bookModel(bookData);
       book.save((error, data) => {
@@ -100,20 +103,25 @@ function booksPost(request, response) {
     }
   } else {
     var bookid = request.params.id;
-    var comment = request.body.comment;
-    bookModel.findOneAndUpdate(
-      { _id: bookid },
-      {
-        $push: { comments: comment },
-        $inc: { commentcount: 1 }
-      },
-      (error, data) => {
-        if (error !== null) response.json({ error: "no book exists" });
-        else {
-          response.json(data);
+    var comment = bleach.sanitize(request.body.comment);
+    if (comment !== undefined && comment.length > 0) {
+      bookModel.findOneAndUpdate(
+        { _id: bookid },
+        {
+          $push: { comments: comment },
+          $inc: { commentcount: 1 }
+        },
+        (error, data) => {
+          if (error !== null) response.json({ error: "no book exists" });
+          else {
+            console.log("adding coment",data);
+            response.json(data);
+          }
         }
-      }
-    );
+      );
+    } else {
+      response.json({ error: "empty comment" })
+    }
   }
 }
 

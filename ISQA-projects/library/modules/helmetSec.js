@@ -10,7 +10,8 @@ module.exports = function(app, next=()=>{}) {
       contentSecurityPolicy: {
         directives: {
           defaultSrc: ["'self'", "https://cdn.gomix.com/", "code.jquery.com"],
-          scriptSrc: ["'self'", "code.jquery.com"]
+          scriptSrc: ["'self'", "code.jquery.com"],
+          styleSrc: ["'self'","'unsafe-inline'"]
         }
       }
     })

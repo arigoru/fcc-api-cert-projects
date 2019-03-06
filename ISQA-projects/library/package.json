@@ -8,6 +8,7 @@
     "test": "NODE_ENV=test node server.js"
   },
   "dependencies": {
+    "bleach": "^0.3.0",
     "body-parser": "^1.15.2",
     "chai": "^3.5.0",
     "chai-http": "^3.0.0",
