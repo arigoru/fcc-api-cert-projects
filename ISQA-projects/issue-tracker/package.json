@@ -1,5 +1,5 @@
 {
-  "name": "fcc-isqa-2",
+  "name": "fcc-isqa-2-issue",
   "version": "0.0.1",
   "description": "Issue tracker for Freecodecamp certification",
   "main": "server.js",
