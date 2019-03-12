@@ -143,8 +143,7 @@ function issueDelete(request, response, next) {
 const VALIDFIELDS = [
   "issue_title",
   "issue_text",
-  "created_by",
-  "assigned_to",
+  "created_by", "assigned_to",
   "status_text",
   "open"
 ];

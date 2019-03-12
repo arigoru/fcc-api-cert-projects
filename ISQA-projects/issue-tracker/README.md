@@ -1,4 +1,4 @@
-## **FreeCodeCamp**- Information Security and Quality Assurance
+## **FreeCodeCamp** - Information Security and Quality Assurance
 
 ## ISQA 2 - Issue tracker
 
